@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-01 16:34:13
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 00:03:42
+ * @LastEditTime: 2021-08-08 10:38:55
  */
 'use strict';
 const WXBizDataCrypt = require('./../../extend/WXBizDataCrypt');
@@ -95,7 +95,7 @@ class UserService extends Service {
           },
         });
       }
-      
+
       // 结果对象赋值
       result.valid = true;
       // result.message = deData.message; // 微信登录验证消息
@@ -107,7 +107,7 @@ class UserService extends Service {
         attributes: { exclude: ['upt_act', 'updated_id'] },
         include: [
           {
-            model: app.model.Order.Address  ,
+            model: app.model.Order.Address,
             required: false,
           },
         ],
@@ -134,13 +134,13 @@ class UserService extends Service {
   async update(data) {
     const { ctx, app } = this;
     // 修改个人信息
-    const where = {upt_act: { [Op.not]: 'D' } }
+    const where = { upt_act: { [Op.not]: 'D' } }
     where.user_id = data.user_id
     const result = await app.model.User.User.update(data, { where });
     if (result) {
-      return {success: true,msg:'修改个人信息成功'};
+      return { success: true, msg: '修改个人信息成功' };
     }
-    return {success:false, msg:'修改个人信息失败,服务器错误'};
+    return { success: false, msg: '修改个人信息失败,服务器错误' };
 
   }
 

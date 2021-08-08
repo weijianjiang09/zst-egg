@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-04 14:09:42
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:27:41
+ * @LastEditTime: 2021-08-08 10:38:59
  */
 'use strict';
 const Service = require('egg').Service;
@@ -30,7 +30,7 @@ class PostmanService extends Service {
       where,
       offset: (page - 1) * limit,
       limit: parseInt(limit),
-      order: [[ 'created_at', 'desc' ]],
+      order: [['created_at', 'desc']],
     });
   }
 
@@ -50,7 +50,7 @@ class PostmanService extends Service {
     const { userid } = ctx.state.user;
     body.created_id = userid;
     body.updated_id = userid;
-    body.user_id =  userid;
+    body.user_id = userid;
     body.upt_act = "I"
     body.attestation = '0'
     try {
@@ -58,18 +58,18 @@ class PostmanService extends Service {
         where: { user_id: userid, upt_act: { [Op.not]: 'D' } },
       });
 
-      if(isCreate){
+      if (isCreate) {
         const create = await app.model.User.Postman.findOne({
           where: { user_id: userid, upt_act: { [Op.not]: 'D' } },
         });
-        if(create){
-          return {msg:"你正在申请，或者已经是",success:false}
-        }else{
+        if (create) {
+          return { msg: "你正在申请，或者已经是", success: false }
+        } else {
           return await app.model.User.Postman.create(body);
         }
-        
-      }else{
-        return {msg:"没有这个用户不存在，无法注册成为骑手",success:false}
+
+      } else {
+        return { msg: "没有这个用户不存在，无法注册成为骑手", success: false }
       }
       // console.log(isCreate)
     } catch (error) {
@@ -86,9 +86,9 @@ class PostmanService extends Service {
     body.upt_act = 'U';
     try {
       const msg = await ctx.model.User.Postman.update(body, {
-        where: {id:body.id },
+        where: { id: body.id },
       });
-      return {success:true , msg:msg}
+      return { success: true, msg: msg }
     } catch (error) {
       console.log(error);
       return { success: false };
@@ -103,9 +103,9 @@ class PostmanService extends Service {
     body.upt_act = 'U';
     try {
       const msg = await ctx.model.User.Postman.update(body, {
-        where: {id:body.id },
+        where: { id: body.id },
       });
-      return {success:true ,}
+      return { success: true, }
     } catch (error) {
       console.log(error);
       return { success: false };

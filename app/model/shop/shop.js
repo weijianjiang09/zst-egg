@@ -4,13 +4,13 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 14:43:29
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-07 15:11:25
+ * @LastEditTime: 2021-08-08 10:40:14
  */
 'use strict';
 const base = require('../base');
 
 module.exports = app => {
-  const { STRING, INTEGER ,FLOAT} = app.Sequelize;
+  const { STRING, INTEGER, FLOAT } = app.Sequelize;
 
   const Shop = app.model.define('shop',
     Object.assign(base(app), {
@@ -20,14 +20,14 @@ module.exports = app => {
       img_url: STRING(128),
       time: STRING(128),
       opening: STRING(2),
-      minimum:FLOAT,
-      price:FLOAT,
+      minimum: FLOAT,
+      price: FLOAT,
       notice: STRING(255),
     }));
-    Shop.associate = () => {
-      Shop.belongsTo(app.model.Order.Order, { foreignKey: 'shop_id' });
-      Shop.belongsTo(app.model.Shop.Commodity, { foreignKey: 'shop_id' });
-      // Shop.hasMany(app.model.Order.Evaluate, { foreignKey: 'shop_id' });
-    };
+  Shop.associate = () => {
+    Shop.belongsTo(app.model.Order.Order, { foreignKey: 'shop_id' });
+    Shop.belongsTo(app.model.Shop.Commodity, { foreignKey: 'shop_id' });
+    // Shop.hasMany(app.model.Order.Evaluate, { foreignKey: 'shop_id' });
+  };
   return Shop;
 };

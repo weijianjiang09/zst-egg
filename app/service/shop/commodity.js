@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 21:01:22
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-01 15:54:18
+ * @LastEditTime: 2021-08-08 10:39:05
  */
 'use strict';
 
@@ -30,7 +30,7 @@ class CommodityService extends Service {
       where,
       offset: (page - 1) * limit,
       limit: parseInt(limit),
-      order: [[ 'created_at', 'desc' ]],
+      order: [['created_at', 'desc']],
     });
   }
 
@@ -42,7 +42,7 @@ class CommodityService extends Service {
     body.created_id = userid;
     body.updated_id = userid;
     body.putaway = '0'
-    
+
     try {
       return await ctx.model.Shop.Commodity.create(body);
     } catch (error) {
