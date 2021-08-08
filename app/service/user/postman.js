@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-04 14:09:42
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-07 10:34:13
+ * @LastEditTime: 2021-08-08 10:27:41
  */
 'use strict';
 const Service = require('egg').Service;
@@ -16,8 +16,8 @@ class PostmanService extends Service {
     const { limit, page } = query;
     const Op = app.Sequelize.Op;
     const where = { upt_act: { [Op.ne]: 'D' } };
-    if (query.postman_id) {
-      where.postman_id = query.postman_id;
+    if (query.id) {
+      where.id = query.id;
     }
     if (query.name) {
       where.name = { [Op.like]: `%${query.name}%` };
@@ -86,7 +86,7 @@ class PostmanService extends Service {
     body.upt_act = 'U';
     try {
       const msg = await ctx.model.User.Postman.update(body, {
-        where: {postman_id:body.postman_id },
+        where: {id:body.id },
       });
       return {success:true , msg:msg}
     } catch (error) {
@@ -103,7 +103,7 @@ class PostmanService extends Service {
     body.upt_act = 'U';
     try {
       const msg = await ctx.model.User.Postman.update(body, {
-        where: {postman_id:body.postman_id },
+        where: {id:body.id },
       });
       return {success:true ,}
     } catch (error) {
@@ -112,7 +112,7 @@ class PostmanService extends Service {
     }
   }
 
-  async delete({ postman_id }) {
+  async delete({ id }) {
     const { ctx } = this;
     const body = {
       upt_act: 'D',
@@ -122,59 +122,13 @@ class PostmanService extends Service {
     // 更新用户信息
     try {
       return await ctx.model.User.Postman.update(body, {
-        where: { postman_id },
+        where: { id },
       });
     } catch (error) {
       console.log(error);
       return null;
     }
   }
-
-  /**
-   * @param {*} role_code 角色代码
-   * @param {*} name 用户姓名
-   */
-  async getUsersByRole(role_code, name) {
-    const { app, ctx } = this;
-
-    const Op = app.Sequelize.Op;
-    const where = { upt_act: { [Op.ne]: 'D' } };
-    if (name) {
-      where.name = { [Op.like]: `%${name}%` };
-    }
-
-    try {
-      const users = await ctx.model.Sys.User.findAll({
-        attributes: [ 'id', 'name' ],
-        include: {
-          model: ctx.model.Sys.Role,
-          where: { code: role_code },
-        },
-        where,
-      });
-      return users;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }
-
-  // async accomplish(body){
-  //   const { app, ctx } = this;
-
-  //   const Op = app.Sequelize.Op;
-  //   const where = { upt_act: { [Op.ne]: 'D' } };
-  //   where.postman_id = body.postman_id
-  //   try {
-  //     const msg = await ctx.model.Sys.User.update(body.now,{
-  //       where
-  //     });
-  //     return msg;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return null;
-  //   }
-  // }
 }
 
 module.exports = PostmanService;

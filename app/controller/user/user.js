@@ -4,10 +4,20 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-01 16:33:58
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 00:03:48
+ * @LastEditTime: 2021-08-08 00:54:29
+ */
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: 蒋炜楗
+ * @Date: 2021-08-01 16:33:58
+ * @LastEditors: Andy
+ * @LastEditTime: 2021-08-08 00:36:45
  */
 'use strict';
-
+/**
+ * @Controller User
+ */
 const Controller = require('../base');
 
 class UserController extends Controller {
@@ -29,10 +39,12 @@ class UserController extends Controller {
     }  
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 微信登录
-   * @param {*}
-   * @return {*}
+   * 
+   * 
+   * @router post /punctuality/api/user/user/wxLogin
+   * @summary 微信登录
+   * @request body wxlogin
+   * @response 200 wxLogin 
    */  
   async wxLogin(){
     const {ctx, app} = this

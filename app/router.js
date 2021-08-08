@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 15:58:23
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-07 23:31:43
+ * @LastEditTime: 2021-08-08 10:13:47
  */
 'use strict';
 
@@ -85,7 +85,8 @@ module.exports = app => {
   router.post('/punctuality/api/user/postman/updateMsg',jwt,controller.user.postman.update_msg)
   // 认证
   router.post('/punctuality/api/user/postman/updateAttestation',jwt,controller.user.postman.updateAttestation)
-  //
+  //个人信息
+  router.get('/punctuality/api/user/postman/getPostmanInfo',jwt,controller.user.postman.getPostmanInfo)
 
   // 用户查询地址
   router.get('/punctuality/api/order/address/user/page', jwt, controller.order.address.page);

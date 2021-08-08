@@ -4,10 +4,12 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 17:14:24
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-02 14:18:50
+ * @LastEditTime: 2021-08-08 00:22:34
  */
 'use strict';
-
+/**
+ * @Controller Shop
+ */
 const Controller = require('../base');
 
 class ShopController extends Controller {

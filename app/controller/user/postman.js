@@ -4,18 +4,21 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-04 14:09:24
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-07 10:40:25
+ * @LastEditTime: 2021-08-08 10:30:17
  */
 'use strict';
-
+/**
+ * @Controller Postman
+ */
 const Controller = require('../base');
 
 class PostmanController extends Controller {
   /**
-   * @name: 蒋炜楗
-   * @msg: 查询个人信息
-   * @param {*}
-   * @return {*}
+   * @router get /punctuality/api/user/postman/getPostmanInfo
+   * @summary 个人
+   * @Description 查询骑手个人
+   * @request 
+   * @response 200 getPostmanInfo
    */  
   async getPostmanInfo(){
     const { ctx } = this;
@@ -23,10 +26,11 @@ class PostmanController extends Controller {
     this.success(await ctx.service.user.postman.getPostmanInfo(),"查询成功！");
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 分页查询
-   * @param {*}
-   * @return {*}
+   *@router get /punctuality/api/user/postman/page
+   *@summary 分页查询
+   * @Description 
+   * @request body PostmanPage
+   * @response 
    */  
   async page() {
     const { ctx } = this;

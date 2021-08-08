@@ -4,10 +4,12 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 21:01:04
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-01 15:52:08
+ * @LastEditTime: 2021-08-08 00:22:47
  */
 'use strict';
-
+/**
+ * @Controller Commodity
+ */
 const Controller = require('../base');
 
 class CommodityController extends Controller {
