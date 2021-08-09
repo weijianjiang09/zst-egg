@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-04 14:09:24
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:30:17
+ * @LastEditTime: 2021-08-08 17:48:51
  */
 'use strict';
 /**
@@ -22,7 +22,7 @@ class PostmanController extends Controller {
    */  
   async getPostmanInfo(){
     const { ctx } = this;
-    
+  
     this.success(await ctx.service.user.postman.getPostmanInfo(),"查询成功！");
   }
   /**
@@ -30,7 +30,7 @@ class PostmanController extends Controller {
    *@summary 分页查询
    * @Description 
    * @request body PostmanPage
-   * @response 
+   * @response 200 resPostmanPage
    */  
   async page() {
     const { ctx } = this;
@@ -42,11 +42,12 @@ class PostmanController extends Controller {
 
     this.success(await ctx.service.user.postman.page(query),"查询成功！");
   }
-  /**
-   * @name: 蒋炜楗
-   * @msg: 创建骑手
-   * @param {*}
-   * @return {*}
+   /**
+   *@router post /punctuality/api/user/postman/create
+   *@summary 创建骑手
+   * @Description 
+   * @request body PostmanCreate
+   * @response 200 baseResponse
    */  
   async create() {
     const { ctx } = this;
@@ -64,13 +65,14 @@ class PostmanController extends Controller {
     } else {
       this.error('添加失败 ' + (res.msg || ''));
     }
-  }
+  }  
   /**
-   * @name: 蒋炜楗
-   * @msg: 更新骑手信息 通用
-   * @param {*}
-   * @return {*}
-   */  
+   *@router post /punctuality/api/user/postman/create
+   *@summary 更新骑手信息 通用
+   * @Description 
+   * @request body PostmanUpdate_msg
+   * @response 200 baseResponse
+   */
   async update_msg() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -86,12 +88,13 @@ class PostmanController extends Controller {
       this.error('修改失败 ' + (res.msg || ''));
     }
   }
-  /**
-   * @name: 蒋炜楗
-   * @msg: 骑手认证
-   * @param {*}
-   * @return {*}
-   */  
+ /**
+   *@router post /punctuality/api/user/postman/updateAttestation
+   *@summary 认证
+   * @Description 
+   * @request body PostmanUpdateAttestation
+   * @response 200 baseResponse
+   */
   async updateAttestation() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -108,12 +111,13 @@ class PostmanController extends Controller {
       this.error('修改失败 ' + (res.msg || ''));
     }
   }
-  /**
-   * @name: 蒋炜楗
-   * @msg: 删除
-   * @param {*}
-   * @return {*}
-   */  
+ /**
+   *@router post /punctuality/api/user/postman/delete
+   *@summary 删除
+   * @Description 
+   * @request body PostmanDelete
+   * @response 200 baseResponse
+   */
   async delete() {
     const { ctx } = this;
     const body = ctx.request.body;

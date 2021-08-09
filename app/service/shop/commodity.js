@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 21:01:22
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:39:05
+ * @LastEditTime: 2021-08-08 16:26:07
  */
 'use strict';
 
@@ -36,15 +36,30 @@ class CommodityService extends Service {
 
 
   async create(body) {
-    const { ctx } = this;
-
+    const { app, ctx } = this;
+    const Op = app.Sequelize.Op;
     const { userid } = ctx.state.user;
     body.created_id = userid;
     body.updated_id = userid;
     body.putaway = '0'
-
+    
     try {
-      return await ctx.model.Shop.Commodity.create(body);
+      let flag
+     await ctx.model.Shop.Commodity
+     .findOrCreate({where:{name:body.name,shop_id: body.shop_id},defaults: body})
+     .then(([user, created]) => {
+        // console.log(user.get({
+        //   plain: true
+        // }))
+        flag = created
+        // console.log(created)
+      })
+      if(flag){
+        return { success: true, msg: "添加成功" }
+      }else{
+        return { success: false, msg: "该菜品已存在或者该商店不存在" }
+      }
+      
     } catch (error) {
       console.log(error);
       return null;

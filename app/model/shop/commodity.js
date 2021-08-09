@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 14:49:27
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:40:10
+ * @LastEditTime: 2021-08-08 16:11:10
  */
 'use strict';
 const base = require('../base');
@@ -16,7 +16,7 @@ module.exports = app => {
     Object.assign(base(app), {
       commodity_id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       shop_id: { type: INTEGER, allowNull: false },
-      name: STRING(64),
+      name: { type: STRING(64), },
       img_url: STRING(128),
       price: FLOAT,
       description: STRING(255),

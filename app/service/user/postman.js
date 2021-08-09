@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-04 14:09:42
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:38:59
+ * @LastEditTime: 2021-08-08 17:01:17
  */
 'use strict';
 const Service = require('egg').Service;
@@ -58,18 +58,24 @@ class PostmanService extends Service {
         where: { user_id: userid, upt_act: { [Op.not]: 'D' } },
       });
 
-      if (isCreate) {
-        const create = await app.model.User.Postman.findOne({
-          where: { user_id: userid, upt_act: { [Op.not]: 'D' } },
-        });
-        if (create) {
-          return { msg: "你正在申请，或者已经是", success: false }
+      if (isCreate) {  
+        let flag 
+        await app.model.User.Postman
+        .findOrCreate({where: { user_id: userid, upt_act: { [Op.not]: 'D' }}, defaults:body })
+        .then(([user, created]) => {
+          // console.log(user.get({
+          //   plain: true
+          // }))
+          flag=created
+        })
+        if (flag) {
+          return { msg: "成功递交申请！", success: true }
+          
         } else {
-          return await app.model.User.Postman.create(body);
+          return { msg: "你正在申请，或者已经是", success: false }
         }
-
       } else {
-        return { msg: "没有这个用户不存在，无法注册成为骑手", success: false }
+        return { msg: "这个用户不存在，无法注册成为骑手", success: false }
       }
       // console.log(isCreate)
     } catch (error) {

@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-07 10:52:00
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 00:23:13
+ * @LastEditTime: 2021-08-09 11:07:38
  */
 'use strict';
 /**
@@ -13,11 +13,12 @@
 const Controller = require('../base');
 
 class OrderController extends Controller {
-  /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
+   /**
+   *@router get /punctuality/api/order/order/page
+   *@summary 订单查询
+   * @Description 根据需求自行传入所需的值
+   * @request body OrderPage
+   * @response 200 resOrderPage
    */
   async page() {
     const { ctx } = this;
@@ -30,11 +31,12 @@ class OrderController extends Controller {
     this.success(await ctx.service.order.order.page(query),"查询成功");
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
-   */  
+   * @router post /punctuality/api/order/order/create
+   * @summary 订单创建
+   * @Description 前端注意限制菜品的商店限制，菜单只显示本店的菜品
+   * @request body OrderCreate
+   * @response 200 baseResponse
+   */
   async create() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -52,11 +54,12 @@ class OrderController extends Controller {
       this.error('添加失败 ' + (res.msg || ''));
     }
   }
-  /**
-   * @name: 蒋炜楗
-   * @msg: 修改状态后端用
-   * @param {*}
-   * @return {*}
+   /**
+   * @router post /punctuality/api/order/order/updateStatus
+   * @summary 订单状态修改
+   * @Description 我们接单或者退单用的接口
+   * @request body OrderUpdateStatus
+   * @response 200 baseResponse
    */
   async update_status() {
     const { ctx } = this;
@@ -74,19 +77,19 @@ class OrderController extends Controller {
       this.error('修改失败 ' + (res.msg || ''));
     }
   }
-  /**
-   * @name: 蒋炜楗
-   * @msg: 骑手接口
-   * @param {*}
-   * @return {*}
-   */  
+   /**
+   * @router post /punctuality/api/order/order/updatePostman
+   * @summary 订单状态修改
+   * @Description 骑手点送达使用的接口
+   * @request body OrderUpdatePostman
+   * @response 200 baseResponse
+   */
   async update_postman() {
     const { ctx } = this;
     const body = ctx.request.body;
 
     ctx.validate({
       order_id: { type: 'integer', required: true },
-      
     }, body);
 
     const res = await ctx.service.order.order.update_postman(body);
@@ -97,11 +100,12 @@ class OrderController extends Controller {
     }
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 抢单
-   * @param {*}
-   * @return {*}
-   */  
+   * @router post /punctuality/api/order/order/updateGrab
+   * @summary 订单状态修改
+   * @Description 骑手点送达使用的接口
+   * @request body OrderUpdateGrab
+   * @response 200 baseResponse
+   */
   async update_grab() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -119,10 +123,11 @@ class OrderController extends Controller {
     }
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 删除接口
-   * @param {*}
-   * @return {*}
+   * @router post /punctuality/api/order/order/delete
+   * @summary 订单删除 后台用
+   * @Description 我测试用的
+   * @request body OrderDelete
+   * @response 200 baseResponse
    */
   async delete() {
     const { ctx } = this;

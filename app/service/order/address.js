@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-02 17:22:41
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-03 15:56:02
+ * @LastEditTime: 2021-08-08 17:45:49
  */
 'use strict';
 
@@ -37,6 +37,9 @@ class AddressService extends Service {
     }
     if (query.sex) {
       where.sex = { [Op.like]: `%${query.sex}%` };
+    }
+    if(query.user_id) {
+      where.user_id=query.user_id
     }
     return await ctx.model.Order.Address.findAndCountAll({
       distinct: true, // 不加distinct，count和实际不符

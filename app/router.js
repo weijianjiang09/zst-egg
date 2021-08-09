@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 15:58:23
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:13:47
+ * @LastEditTime: 2021-08-09 11:09:23
  */
 'use strict';
 
@@ -74,6 +74,8 @@ module.exports = app => {
   // router.post
   // 微信登录
   router.post('/punctuality/api/user/user/wxLogin',controller.user.user.wxLogin)
+  // 修改个人信息
+  router.post('/punctuality/api/user/user/update',controller.user.user.update)
 
   // 后台骑手查询
   router.get('/punctuality/api/user/postman/admin/page', jwt, controller.user.postman.page);

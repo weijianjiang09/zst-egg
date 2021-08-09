@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 14:43:29
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:40:14
+ * @LastEditTime: 2021-08-08 15:00:12
  */
 'use strict';
 const base = require('../base');
@@ -20,8 +20,6 @@ module.exports = app => {
       img_url: STRING(128),
       time: STRING(128),
       opening: STRING(2),
-      minimum: FLOAT,
-      price: FLOAT,
       notice: STRING(255),
     }));
   Shop.associate = () => {

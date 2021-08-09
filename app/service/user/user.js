@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-01 16:34:13
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:38:55
+ * @LastEditTime: 2021-08-09 11:26:30
  */
 'use strict';
 const WXBizDataCrypt = require('./../../extend/WXBizDataCrypt');
@@ -150,26 +150,18 @@ class UserService extends Service {
      * @param where 数据库索引
      * @return {Promise<{}>}
      */
-  async wxLoginByToken(data, where) {
-    console.log('微信登录', data, 'where', where);
-
-    const result = {}; // 声明结果集
+  async wxLoginByToken(user_id) {
     // 查找用户
     const userInfo = await this.app.model.User.User.findOne({
-      where: { user_id: where.user_id, upt_act: { [Op.not]: 'D' } },
+      where: { user_id: user_id, upt_act: { [Op.not]: 'D' } },
       attributes: { exclude: ['upt_act', 'updated_id'] },
-      include: [
-        {
-          model: db.club_counselor,
-        },
-      ],
     });
 
 
     if (userInfo) {
-      return this.initResult(true, '登录成功', userInfo);
+      return {success: true,msg:userInfo, };
     }
-    return this.initResult(false, '登录失败,账号未注册', userInfo);
+    return {success: false, msg:'登录失败,账号未注册'};
 
   }
 }

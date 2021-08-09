@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 21:01:04
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 00:22:47
+ * @LastEditTime: 2021-08-08 16:41:19
  */
 'use strict';
 /**
@@ -13,14 +13,15 @@
 const Controller = require('../base');
 
 class CommodityController extends Controller {
-  /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
-   */  
+   /**
+   *@router get /punctuality/api/shop/commodity/page
+   *@summary 分页查询
+   * @Description 
+   * @request body CommodityPage
+   * @response 200 resCommodityPage
+   */ 
   async page() {
-    const { ctx } = this;
+    const { ctx } = this; 
     const query = ctx.query;
     ctx.validate({
       limit: { type: 'string', required: true },
@@ -31,11 +32,13 @@ class CommodityController extends Controller {
   }
 
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
-   */  
+   *@router post /punctuality/api/shop/commodity/create
+   *@summary 创建菜品
+   * @Description 
+   * @request body CommodityCreate
+   * @response 200 baseResponse
+   */ 
+  
   async create() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -46,18 +49,19 @@ class CommodityController extends Controller {
     }, body);
 
     const res = await ctx.service.shop.commodity.create(body);
-    if (res) {
-      this.success('添加成功');
+    if (res.success) {
+      this.success('','添加成功');
     } else {
       this.error('添加失败 ' + (res.msg || ''));
     }
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
-   */  
+   *@router post /punctuality/api/shop/commodity/update
+   *@summary 更新菜品信息
+   * @Description 
+   * @request body CommodityUpdate
+   * @response 200 baseResponse
+   */ 
   async update() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -73,12 +77,13 @@ class CommodityController extends Controller {
       this.error('修改失败');
     }
   }
-  /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
-   */  
+   /**
+   *@router post /punctuality/api/shop/commodity/putaway
+   *@summary 上下架
+   * @Description 
+   * @request body CommodityPutaway
+   * @response 200 baseResponse
+   */ 
   async update_putAway() {
     const { ctx } = this;
     const body = ctx.request.body;
@@ -96,11 +101,12 @@ class CommodityController extends Controller {
     }
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
-   */  
+   *@router post /punctuality/api/shop/commodity/delete
+   *@summary 删除菜品
+   * @Description 
+   * @request body CommodityDelete
+   * @response 200 baseResponse
+   */ 
   async delete() {
     const { ctx } = this;
     const body = ctx.request.body;

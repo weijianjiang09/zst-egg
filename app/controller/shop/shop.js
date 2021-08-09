@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 17:14:24
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 00:22:34
+ * @LastEditTime: 2021-08-08 15:42:08
  */
 'use strict';
 /**
@@ -15,10 +15,10 @@ const Controller = require('../base');
 class ShopController extends Controller {
   
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
+   * @router get /punctuality/api/shop/shop/page
+   * @summary 分页查询 
+   * @request body ShopPage
+   * @response 200 resShopPage
    */  
   async page() {
     const { ctx } = this;
@@ -32,10 +32,10 @@ class ShopController extends Controller {
   }
 
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
+   * @router post /punctuality/api/shop/shop/create
+   * @summary 店铺创建
+   * @request body ShopCreate
+   * @response 200 baseResponse
    */  
   async create() {
     const { ctx } = this;
@@ -55,10 +55,10 @@ class ShopController extends Controller {
     }
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
+   * @router post /punctuality/api/shop/shop/update
+   * @summary 店铺信息修改
+   * @request body ShopUpdate
+   * @response 200 baseResponse
    */  
   async update() {
     const { ctx } = this;
@@ -79,10 +79,10 @@ class ShopController extends Controller {
     }
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}4
-   * @return {*}
+   * @router post /punctuality/api/shop/shop/delete
+   * @summary 店铺删除
+   * @request body ShopDelete
+   * @response 200 baseResponse
    */  
   async delete() {
     const { ctx } = this;

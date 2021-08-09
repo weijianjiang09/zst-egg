@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-01 16:33:58
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 00:54:29
+ * @LastEditTime: 2021-08-09 11:26:49
  */
 /*
  * @Descripttion: 
@@ -39,8 +39,6 @@ class UserController extends Controller {
     }  
   }
   /**
-   * 
-   * 
    * @router post /punctuality/api/user/user/wxLogin
    * @summary 微信登录
    * @request body wxlogin
@@ -58,28 +56,38 @@ class UserController extends Controller {
 
     const res = await ctx.service.user.user.wxLogin(reqData)
     if(res.success){
-      this.success(res) 
+      this.success(res,"登录成功") 
     }else{
       this.error(res) 
     }  
   }
   /**
-   * @name: 蒋炜楗
-   * @msg: 
-   * @param {*}
-   * @return {*}
-   */  
+   * @router post /punctuality/api/user/user/update
+   * @summary 修改个人信息
+   * @request body wxUpdate
+   * @response 200  baseResponse
+   */ 
   async update(){
     const {ctx, app} = this
     const Data = ctx.request.body;
     const res = await ctx.service.user.user.update(Data)
     if(res.success){
-      this.success(res.msg) 
+      this.success('',res.msg) 
     }else{
       this.error(res.msg) 
     }  
   }
-  
+
+  async wxLoginByToken(){
+    const {ctx, app} = this
+    const { user_id } = ctx.state.user;
+    const res = await ctx.service.user.user.wxLoginByToken(user_id)
+    if(res.success){
+      this.success(res.userInfo,"登录成功") 
+    }else{
+      this.error(res) 
+    }  
+  }
 }
 
 module.exports = UserController;
