@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 16:09:05
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-04 16:44:22
+ * @LastEditTime: 2021-08-13 20:18:20
  */
 'use strict';
 
@@ -15,14 +15,14 @@ class BaseController extends Controller {
    * @param success Bool 结果
    * @param message String 提示消息
    * @param result Object 结果对象
-   * @returns {{result,  type: string, message}|{result, type: string, message}}
+   * @returns {{data,  type: string, message}|{data, type: string, message}}
    */
-  success(result,message) {
+  success(data,message) {
     this.ctx.body = {
       code: 200,
       success: true,
       message,
-      result,
+      data,
     };
   }
     /**

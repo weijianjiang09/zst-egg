@@ -15,7 +15,7 @@ module.exports = {
   },
   wxLogin: {
     success: { type: 'boolean', example: true, description: 'true代表成功' },
-    result: { type: 'string', example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjM2LCJ1c2VybmFtZSI6ImFkbWluIiwibmFtZSI6Iui2hee6p-euoeeQhuWRmCIsInJvbGVzIjpbXSwiaWF0IjoxNjI4MzU1MTY4LCJleHAiOjE2Mjg5NTk5Njh9.54wTtgRZoJxC0CFCSQw6umjH-PEgzujgqYbBK1Gp0hs", description: '登录成功的返回的token' }
+    data: { type: 'string', example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjM2LCJ1c2VybmFtZSI6ImFkbWluIiwibmFtZSI6Iui2hee6p-euoeeQhuWRmCIsInJvbGVzIjpbXSwiaWF0IjoxNjI4MzU1MTY4LCJleHAiOjE2Mjg5NTk5Njh9.54wTtgRZoJxC0CFCSQw6umjH-PEgzujgqYbBK1Gp0hs", description: '登录成功的返回的token' }
   },
   fileUrl: {
     url: { type: 'string', description: '图片地址' },
@@ -23,7 +23,7 @@ module.exports = {
   getPostmanInfo: {
     success: { type: 'boolean', example: true, description: 'true代表成功' },
     message: { type: 'string', example: "查询成功！" },
-    result: {
+    data: {
       type: 'object', example: {
         "created_at": "2021-08-04 15:08:21",
         "updated_at": "2021-08-08 10:08:44",
@@ -45,7 +45,7 @@ module.exports = {
   resShopPage: {
     success: { type: 'boolean', example: true, description: 'true代表成功' },
     message: { type: 'string', example: '请求成功' },
-    result: {
+    data: {
       type: 'object', example: {
         "count": 1, "rows": [
           {
@@ -68,7 +68,7 @@ module.exports = {
   resCommodityPage: {
     success: { type: 'boolean', example: true, description: 'true代表成功' },
     message: { type: 'string', example: '请求成功' },
-    result: {
+    data: {
       type: 'object', example: {
         "count": 1,
         "rows": [
@@ -92,7 +92,7 @@ module.exports = {
   resPostmanPage: {
     success: { type: 'boolean', example: true, description: 'true代表成功' },
     message: { type: 'string', example: '请求成功' },
-    result: {
+    data: {
       type: 'object', example: {
         "count": 1,
         "rows": [
@@ -118,7 +118,7 @@ module.exports = {
   resAddressPage: {
     success: { type: 'boolean', example: true, description: 'true代表成功' },
     message: { type: 'string', example: '请求成功' },
-    result: {
+    data: {
       type: 'object', example: {
         "count": 1,
         "rows": [
@@ -141,7 +141,7 @@ module.exports = {
   resOrderPage: {
     success: { type: 'boolean', example: true, description: 'true代表成功' },
     message: { type: 'string', example: '请求成功' },
-    result: {
+    data: {
       type: 'object', example: {
         "count": 1,
         "rows": [

@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 15:58:23
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-09 11:09:23
+ * @LastEditTime: 2021-10-04 22:58:39
  */
 'use strict';
 
@@ -21,7 +21,8 @@ module.exports = app => {
   router.post('/punctuality/api/reset/psw', jwt, controller.sys.user.resetPsw);
   // 文件上传
   router.post('/punctuality/api/file', controller.sys.file.upload);
-
+  // 图像上传
+  router.post('/punctuality/api/upload/image', controller.sys.file.upload);
   router.get('/punctuality/api/user/page', jwt, controller.sys.user.page);
   router.post('/punctuality/api/user/create', jwt, controller.sys.user.create);
   router.post('/punctuality/api/user/update', jwt, controller.sys.user.update);
@@ -75,7 +76,11 @@ module.exports = app => {
   // 微信登录
   router.post('/punctuality/api/user/user/wxLogin',controller.user.user.wxLogin)
   // 修改个人信息
-  router.post('/punctuality/api/user/user/update',controller.user.user.update)
+  router.post('/punctuality/api/user/user/update',jwt,controller.user.user.update)
+  // 查询用户信息
+  router.get('/punctuality/api/user/user/page',jwt,controller.user.user.page)
+
+  
 
   // 后台骑手查询
   router.get('/punctuality/api/user/postman/admin/page', jwt, controller.user.postman.page);
@@ -102,8 +107,12 @@ module.exports = app => {
   router.post('/punctuality/api/order/address/delete', jwt, controller.order.address.delete);
   
 
-  //查询订单 
+  //查询订单 已完成
   router.get('/punctuality/api/order/order/page', jwt, controller.order.order.page);
+  // 查询订单 未完成
+  router.get('/punctuality/api/order/order/pageNow', jwt, controller.order.order.page_now);
+  //用户查询 
+  router.get('/punctuality/api/order/order/pageUser', jwt, controller.order.order.page_user);
   // 创建订单
   router.post('/punctuality/api/order/order/create', jwt, controller.order.order.create);
   //修改状态
@@ -114,9 +123,26 @@ module.exports = app => {
   router.post('/punctuality/api/order/order/delete', jwt, controller.order.order.delete);
   // 抢单
   router.post('/punctuality/api/order/order/updateGrab', jwt, controller.order.order.update_grab);
+  // 转为派送中
+  router.post('/punctuality/api/order/order/updateReception', jwt, controller.order.order.update_reception);
+  //申请退款
+  router.post('/punctuality/api/order/order/refundOrder',jwt, controller.order.order.refundOrder);
 
+  // 商店类型搜索
+  router.get('/punctuality/api/shop/type/select', jwt, controller.shop.type.typeSelect);
+  // 确认分类下是否还有菜品
+  router.get('/punctuality/api/shop/type/commodityIS', jwt, controller.shop.type.commoditySelect);
 
-  
+  //配送费
+  router.get('/punctuality/api/order/postPrice/select', jwt, controller.order.postPrice.select);
+
+  // 支付
+  router.post('/punctuality/api/pay/pay',jwt, controller.pay.pay.CreatePaymentInfo);
+  // 退款
+  router.post('/punctuality/api/pay/refund', jwt,controller.pay.pay.refund);
+
   // 测试
   router.get('/punctuality/api/test/test', jwt, controller.test.test.test);
+  // type 测试
+  router.post('/punctuality/api/test/testType', jwt, controller.test.test.testType);
 };

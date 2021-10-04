@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-01 16:33:58
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-09 11:26:49
+ * @LastEditTime: 2021-09-03 12:01:47
  */
 /*
  * @Descripttion: 
@@ -52,7 +52,7 @@ class UserController extends Controller {
       secret: { type: 'string', required: true },
       code: { type: 'string', required: true },
       userInfo:{ type: 'object', required: true },
-    }, body);
+    }, reqData);
 
     const res = await ctx.service.user.user.wxLogin(reqData)
     if(res.success){
@@ -77,7 +77,25 @@ class UserController extends Controller {
       this.error(res.msg) 
     }  
   }
+   /**
+   * @router post /punctuality/api/user/user/page
+   * @summary 查询用户信息信息
+   * @request body wxUpdate
+   * @response 200  baseResponse
+   */ 
+  async page(){
+    const {ctx, app} = this
+    const query = ctx.query;
+    ctx.validate({
+      limit: { type: 'string', required: true },
+      page: { type: 'string', required: true },
+    }, query);
+    const res = await ctx.service.user.user.page(query)
 
+      this.success(res,res.msg,"查询成功") 
+    
+     
+  }
   async wxLoginByToken(){
     const {ctx, app} = this
     const { user_id } = ctx.state.user;

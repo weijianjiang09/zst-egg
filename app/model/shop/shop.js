@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 14:43:29
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 15:00:12
+ * @LastEditTime: 2021-09-16 16:53:22
  */
 'use strict';
 const base = require('../base');
@@ -24,7 +24,8 @@ module.exports = app => {
     }));
   Shop.associate = () => {
     Shop.belongsTo(app.model.Order.Order, { foreignKey: 'shop_id' });
-    Shop.belongsTo(app.model.Shop.Commodity, { foreignKey: 'shop_id' });
+    Shop.hasMany(app.model.Shop.Commodity, { foreignKey: 'shop_id' });
+    Shop.hasMany(app.model.Shop.Type, { foreignKey: 'shop_id' });
     // Shop.hasMany(app.model.Order.Evaluate, { foreignKey: 'shop_id' });
   };
   return Shop;

@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-04 14:09:42
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 17:01:17
+ * @LastEditTime: 2021-08-21 15:52:46
  */
 'use strict';
 const Service = require('egg').Service;
@@ -106,6 +106,7 @@ class PostmanService extends Service {
     const { userid } = ctx.state.user;
     body.updated_at = ctx.helper.formatTime(new Date());
     body.updated_id = userid;
+    body.attestation = "1"
     body.upt_act = 'U';
     try {
       const msg = await ctx.model.User.Postman.update(body, {

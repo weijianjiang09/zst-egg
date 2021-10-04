@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 16:12:31
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-09 11:10:31
+ * @LastEditTime: 2021-10-03 15:16:27
  */
 'use strict';
 module.exports = {
@@ -39,15 +39,25 @@ module.exports = {
     location: { type: 'string', required: true,description: "位置" },
     img_url:{type: 'string', required: true,description: "图片路径"},
     notice:{type: 'string',description: "公告" },
-    time:{type: 'string',description: "营业时间" ,example:"8:30:00,20:30:00" }
+    time:{type: 'string',description: "营业时间" ,example:"8:30:00,20:30:00" },
+    typeArray:{type: 'array',itemType: 'string', required: true,description: "分类",example:[{
+      type_name:"肉"
+    }]}
   },
   ShopUpdate:{ 
     shop_id :{type: 'integer', required: true,description: "商铺ID" },
-    name :{ type: 'string', required: true,description: "商铺名" },
-    location: { type: 'string', required: true,description: "位置" },
-    img_url:{type: 'string', required: true,description: "图片路径"},
+    name :{ type: 'string', description: "商铺名" },
+    location: { type: 'string', description: "位置" },
+    img_url:{type: 'string', description: "图片路径"},
     notice:{type: 'string',description: "公告" },
-    time:{type: 'string',description: "营业时间" ,example:"8:30:00,20:30:00" }
+    time:{type: 'string',description: "营业时间" ,example:"8:30:00,20:30:00" },
+    typeArray:{type: 'array',itemType: 'string', required: true,description: "分类",example:[{
+      type_name:"肉"
+    },{
+      type_name:"肉",
+      shop_id:3,
+      type_id:5,
+    }]}
   },
   ShopDelete:{ 
     shop_id :{type: 'integer', required: true,description: "商铺ID" },
@@ -56,6 +66,7 @@ module.exports = {
     limit: { type: 'string', required: true, example: 10 ,description:"条数" },
     page: { type: 'string', required: true, example: 1 ,description: "页数"},
     name: { type: 'string',  example: "xxxx" ,description: "名字"},
+    shop_id: { type: 'integer',  example: "1" ,description: "商铺id"},
     opening: { type: 'string', example: 1 ,description: "是否营业 1是 0否"},
     location: { type: 'string', example: "xxxxxxxx" ,description: "位置"}
   },
@@ -148,7 +159,12 @@ module.exports = {
     id:{type: 'integer',  example: 10 ,description:"骑手ID"},
     user_id:{type: 'integer',  example: 10 ,description:"用户ID"},
     shop_id:{type: 'integer', example: 10 ,description:"商家ID"},
-    order_id:{type: 'integer',  example: 10 ,description:"订单ID"},
+    order_id:{type: 'string',  example: 10 ,description:"订单ID"},
+    status:{type: 'string', example: "1" ,description: "0未接单 1已接单 2等待派送 3派送中 4已送达 5退单 6超时 7已处理超时"},
+  },
+  OrderPageUser:{
+    limit: { type: 'string', required: true, example: 10 ,description:"条数" },
+    page: { type: 'string', required: true, example: 1 ,description: "页数"},
     status:{type: 'string', example: "1" ,description: "0未接单 1已接单 2等待派送 3派送中 4已送达 5退单 6超时 7已处理超时"},
   },
   OrderCreate:{
@@ -168,17 +184,37 @@ module.exports = {
     remark: { type: 'string',description:"备注",example:"不要香菜"},
   },
   OrderUpdateStatus:{
-    order_id:{type: 'integer',  example: 10 ,required: true ,description:"订单ID"},
+    order_id:{type: 'string',  example: 10 ,required: true ,description:"订单ID"},
     status:{type: 'string', example: "1" ,required: true ,description: "0未接单 1已接单 2等待派送 3派送中 4已送达 5退单 6超时 7已处理超时"},
   },
   OrderUpdatePostman:{
-    order_id:{type: 'integer',  example: 10 ,required: true ,description:"订单ID"},
+    order_id:{type: 'string',  example: 10 ,required: true ,description:"订单ID"},
   },
   OrderUpdateGrab:{
-    order_id:{type: 'integer',  example: 10 ,required: true ,description:"订单ID"},
+    order_id:{type: 'string',  example: 10 ,required: true ,description:"订单ID"},
     id:{type: 'integer',  example: 10 ,required: true ,description:"骑手ID"},
   },
+  OrderUpdateReception:{
+    order_id:{type: 'string',  example: 10 ,required: true ,description:"订单ID"},
+  },
   OrderDelete:{
-    order_id:{type: 'integer',  example: 10 ,required: true ,description:"订单ID"},
+    order_id:{type: 'string',  example: 10 ,required: true ,description:"订单ID"},
+  },
+  typeSelect:{
+    shop_id:{type: 'string',  example: 10 ,required: true ,description:"商店ID"}
+  },
+  CreatePaymentInfo:{
+    code:{type: 'string',  example: "sa468dasd7567da8s" ,required: true ,description:"login获取得code"},
+    money:{type: 'number',  example: 0.01 ,required: true ,description:"金额"}
+  },
+  refundPayment:{
+    out_trade_no: { type: 'string', required: true, example: "202109182319195981631978359635" ,required: true ,description:"订单号  商户单号"},
+    refund_desc: { type: 'string', required: true , example: "sa468dasd7567da8s" ,required: true ,description:"退款原因描述"},
+    refund_fee: { type: 'number', required: true , example: "0.01" ,required: true ,description:"退款金额"},
+    PayPrice: { type: 'number', required: true , example: "0.02" ,required: true ,description:"总金额"},
+  },
+  refundOrder:{
+    order_id:{type: 'string',  example: 10 ,required: true ,description:"订单ID"},
+    cause:{type: 'string',  example: "xxxxxxx" ,required: true ,description:"退款原因"}
   }
 };

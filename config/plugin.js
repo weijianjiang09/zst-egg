@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 15:58:23
  * @LastEditors: Andy
- * @LastEditTime: 2021-07-31 11:04:03
+ * @LastEditTime: 2021-10-01 23:55:37
  */
 'use strict';
 
@@ -33,6 +33,10 @@ module.exports = {
   swaggerdoc: {
     enable: true, // 是否启用。
     package: 'egg-swagger-doc', // 指定包名称。
+  },
+  wechatPay: {
+    enable: true,
+    package: 'egg-wechat-pay'
   },
   io: {
     enable: true,

@@ -1,7 +1,8 @@
 /* eslint valid-jsdoc: "off" */
 
 'use strict';
-
+const fs = require('fs')
+const path = require('path')
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -59,6 +60,7 @@ module.exports = appInfo => {
     securityDefinitions: { // 配置接口安全授权方式。
 
     },
+     routers: ['/app_api'],
     enableSecurity: false, // 是否启用授权，默认 false（不启用）。
     // enableValidate: true,    // 是否启用参数校验，默认 true（启用）。
     routerMap: true, // 是否启用自动生成路由，默认 true (启用)。
@@ -82,6 +84,32 @@ module.exports = appInfo => {
       // },
     },
   };
+
+
+  config.wechatPay = {
+    client: {
+        bodyPrefix: '',//
+        appId: 'wx5ae968f3adc48899',//微信公众号或小程序号
+        merchantId: '1614409786',//商户号
+        secret: 'd37c6f877610f4732af3755e054b5b21',//商户密钥
+        notifyUrl: 'https://zhenzhunshi.com',//支付成功回调地址
+        REFUNDNotifyUrl: 'https://zhenzhunshi.com',//退款成功回调地址
+        pfx: fs.readFileSync(path.join(__dirname, '../app/public/wxpay/apiclient_cert.p12'))//退款证书地址
+    },
+    URLS: {
+        UNIFIED_ORDER: 'https://api.mch.weixin.qq.com/pay/unifiedorder',
+        ORDER_QUERY: 'https://api.mch.weixin.qq.com/pay/orderquery',
+        REFUND: 'https://api.mch.weixin.qq.com/secapi/pay/refund',
+        REFUND_QUERY: 'https://api.mch.weixin.qq.com/pay/refundquery',
+        DOWNLOAD_BILL: 'https://api.mch.weixin.qq.com/pay/downloadbill',
+        SHORT_URL: 'https://api.mch.weixin.qq.com/tools/shorturl',
+        CLOSE_ORDER: 'https://api.mch.weixin.qq.com/pay/closeorder',
+        REDPACK_SEND: 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack',
+        REDPACK_QUERY: 'https://api.mch.weixin.qq.com/mmpaymkttransfers/gethbinfo',
+        TRANSFERS: 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers',
+        TRANSFERS_QUERY: 'https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo',
+    }
+}
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',

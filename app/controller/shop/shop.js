@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 17:14:24
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 15:42:08
+ * @LastEditTime: 2021-09-16 16:04:33
  */
 'use strict';
 /**
@@ -45,11 +45,12 @@ class ShopController extends Controller {
       name: { type: 'string', required: true },
       location: { type: 'string', required: true },
       img_url: { type: 'string', required: true },
+      typeArray :{ type: 'array', required: true },
     }, body);
 
     const res = await ctx.service.shop.shop.create(body);
     if (res) {
-      this.success('添加成功');
+      this.success('','添加成功');
     } else {
       this.error('添加失败 ' + (res.msg || ''));
     }
@@ -66,14 +67,15 @@ class ShopController extends Controller {
 
     ctx.validate({
       shop_id: { type: 'integer', required: true },
-      name: { type: 'string', required: true },
-      location: { type: 'string', required: true },
-      img_url: { type: 'string', required: true },
+      
+      // name: { type: 'string', required: true },
+      // location: { type: 'string', required: true },
+      // img_url: { type: 'string', required: true },
     }, body);
 
     const res = await ctx.service.shop.shop.update(body);
     if (res) {
-      this.success('修改成功');
+      this.success('','修改成功');
     } else {
       this.error('修改失败');
     }
@@ -93,7 +95,7 @@ class ShopController extends Controller {
     }, body);
     const res = await ctx.service.shop.shop.delete(body);
     if (res.success) {
-      this.success('删除成功');
+      this.success("",'删除成功');
     } else {
       this.error('删除失败 ' + (res.msg || ''));
     }

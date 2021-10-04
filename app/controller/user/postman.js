@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-04 14:09:24
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 17:48:51
+ * @LastEditTime: 2021-09-05 22:52:01
  */
 'use strict';
 /**
@@ -67,7 +67,7 @@ class PostmanController extends Controller {
     }
   }  
   /**
-   *@router post /punctuality/api/user/postman/create
+   *@router post /punctuality/api/user/postman/updateMsg
    *@summary 更新骑手信息 通用
    * @Description 
    * @request body PostmanUpdate_msg
@@ -78,7 +78,7 @@ class PostmanController extends Controller {
     const body = ctx.request.body;
 
     ctx.validate({
-      postman_id: { type: 'integer', required: true },
+      id: { type: 'integer', required: true },
     }, body);
 
     const res = await ctx.service.user.postman.update_msg(body);
@@ -100,8 +100,7 @@ class PostmanController extends Controller {
     const body = ctx.request.body;
 
     ctx.validate({
-      postman_id: { type: 'integer', required: true },
-      attestation: {type: 'string', required: true}
+      id: { type: 'integer', required: true },
     }, body);
 
     const res = await ctx.service.user.postman.updateAttestation(body);
@@ -123,7 +122,7 @@ class PostmanController extends Controller {
     const body = ctx.request.body;
 
     ctx.validate({
-      postman_id: { type: 'integer', required: true },
+      id: { type: 'integer', required: true },
     }, body);
     const success = await ctx.service.user.postman.delete(body);
     if (success) {

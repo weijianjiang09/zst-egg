@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 21:01:22
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 16:26:07
+ * @LastEditTime: 2021-09-15 22:15:28
  */
 'use strict';
 
@@ -41,10 +41,10 @@ class CommodityService extends Service {
     const { userid } = ctx.state.user;
     body.created_id = userid;
     body.updated_id = userid;
-    body.putaway = '0'
+    // body.putaway = '0'
     
     try {
-      let flag
+    let flag
      await ctx.model.Shop.Commodity
      .findOrCreate({where:{name:body.name,shop_id: body.shop_id},defaults: body})
      .then(([user, created]) => {
@@ -52,7 +52,7 @@ class CommodityService extends Service {
         //   plain: true
         // }))
         flag = created
-        // console.log(created)
+        // console.log(created)-
       })
       if(flag){
         return { success: true, msg: "添加成功" }

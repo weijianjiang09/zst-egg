@@ -4,23 +4,25 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 11:14:51
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:40:00
+ * @LastEditTime: 2021-10-03 23:31:50
  */
 'use strict';
 const base = require('../base');
 
 module.exports = app => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const { STRING, INTEGER, DATE ,DECIMAL} = app.Sequelize;
 
   const Order = app.model.define('order',
     Object.assign(base(app), {
-      order_id: { type: INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+      order_id: { type:STRING(64) , primaryKey: true, autoIncrement: true, allowNull: false },
       user_id: { type: INTEGER, },
       address_id: { type: INTEGER, },
       shop_id: { type: INTEGER, },
       id: { type: INTEGER, },
       remark: STRING(255),
+      cause:STRING(255),
       end_time: DATE,
+      postPrice:{ type: DECIMAL(10,2) },
       overtime: { type: INTEGER, },
       status: STRING(2),
     }));

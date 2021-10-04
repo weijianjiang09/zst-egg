@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-01 16:34:13
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-09 11:26:30
+ * @LastEditTime: 2021-08-21 11:37:12
  */
 'use strict';
 const WXBizDataCrypt = require('./../../extend/WXBizDataCrypt');
@@ -12,6 +12,29 @@ const { Op } = require('sequelize');
 const Service = require('egg').Service;
 
 class UserService extends Service {
+
+  async page(query) {
+    const { app, ctx } = this;
+    const { limit, page } = query;
+    const Op = app.Sequelize.Op;
+    const where = { upt_act: { [Op.ne]: 'D' } };
+    if (query.user_id) {
+      where.user_id = query.user_id;
+    }
+    if (query.user_name) {
+      where.user_name = { [Op.like]: `%${query.user_name}%` };
+    }
+    if (query.sex) {
+      where.sex = query.sex;
+    }
+    return await ctx.model.User.User.findAndCountAll({
+      distinct: true, // 不加distinct，count和实际不符
+      where,
+      offset: (page - 1) * limit,
+      limit: parseInt(limit),
+      order: [['created_at', 'desc']],
+    });
+  }
   /**
    * 校验账户状态
    * @param where 账户id
@@ -143,6 +166,7 @@ class UserService extends Service {
     return { success: false, msg: '修改个人信息失败,服务器错误' };
 
   }
+
 
   /**
      * 微信登录接口(使用token)

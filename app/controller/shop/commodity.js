@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 21:01:04
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 16:41:19
+ * @LastEditTime: 2021-08-20 23:46:56
  */
 'use strict';
 /**
@@ -72,7 +72,7 @@ class CommodityController extends Controller {
 
     const res = await ctx.service.shop.commodity.update(body);
     if (res) {
-      this.success('修改成功');
+      this.success('','修改成功');
     } else {
       this.error('修改失败');
     }
@@ -95,7 +95,7 @@ class CommodityController extends Controller {
 
     const res = await ctx.service.shop.commodity.update_putAway(body);
     if (res) {
-      this.success('修改成功');
+      this.success('','修改成功');
     } else {
       this.error('修改失败');
     }
@@ -116,7 +116,7 @@ class CommodityController extends Controller {
     }, body);
     const res = await ctx.service.shop.commodity.delete(body);
     if (res.success) {
-      this.success('删除成功');
+      this.success('','删除成功');
     } else {
       this.error('删除失败 ' + (res.msg || ''));
     }
