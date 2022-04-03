@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 16:12:31
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-09 10:12:31
+ * @LastEditTime: 2021-10-05 19:25:56
  */
 'use strict';
 
@@ -208,5 +208,8 @@ module.exports = {
           },]
       }
     }
+  },
+  PostPriceSelect:{
+    
   }
 };

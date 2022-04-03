@@ -4,12 +4,13 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-07 10:51:35
  * @LastEditors: Andy
- * @LastEditTime: 2021-10-03 23:47:32
+ * @LastEditTime: 2021-11-09 14:53:25
  */
 'use strict';
 const Service = require('egg').Service;
+const dayjs = require("dayjs")
 const moment = require('moment')
-
+const {keepTwoDecimal} = require('../../extend/util')
 class OrderService extends Service {
 
   async page(query) {
@@ -246,28 +247,62 @@ class OrderService extends Service {
     body.user_id = userid;
     body.created_id = userid;
     body.updated_id = userid;
-    let No = Date.now();
+    // let No = Date.now();
 
-    let OrderNo = moment().format('YYYYMMDDHHmmss') + ctx.helper.randomString(3) + No;
-    body.order_id = OrderNo
+    // let OrderNo = moment().format('YYYYMMDDHHmmss') + ctx.helper.randomString(3) + No;
+    // body.order_id = OrderNo
    // 0未接单 1已接单 2未取货 3派送中 4已送达 5退单 6超时 7已处理超时
     body.status = "0"
     body.upt_act = "I"
+    body.actualDelivery = 0
     try {
       // 是否本店菜品交给前端限制
+      
       return await ctx.model.transaction(async t => {
-        // 创建用户信息
-        const createOrder = await ctx.model.Order.Order.create(body, { transaction: t });
+
+       
         // console.log(createOrder)
         const OrderCommodityArr = body.commodity.map(item => {
           return {
-            order_id: createOrder.order_id,
+            order_id: body.order_id,
             commodity_id: item.commodity_id,
             number: item.number,
             specification: item.specification,
+            packagePrice :item.packagePrice,
             price:item.price
           };
         });
+        body.commodity.forEach(element => {
+          let price = keepTwoDecimal(element.price)
+          let package_price =  keepTwoDecimal(element.packagePrice)
+          body.actualDelivery += price*element.number
+          body.actualDelivery += package_price
+        });
+        console.log(body.actualDelivery,body.coupon_code)
+        // 使用优惠卷
+        if(body.coupon_code){
+          let time = ctx.helper.formatTime(new Date())
+          let res = await ctx.model.Coupon.Coupon.findOne({
+            where:{
+              coupon_code:body.coupon_code
+            },
+            raw: true
+          })
+          // console.log(dayjs(res.end_time).format('YYYY-MM-DD HH:mm:ss'),time , dayjs(res.start_time).format('YYYY-MM-DD HH:mm:ss'),
+          // dayjs(res.end_time).format('YYYY-MM-DD HH:mm:ss')<time && time < dayjs(res.start_time).format('YYYY-MM-DD HH:mm:ss'));
+          
+          if(dayjs(res.end_time).format('YYYY-MM-DD HH:mm:ss')>time && time > dayjs(res.start_time).format('YYYY-MM-DD HH:mm:ss')){
+            await ctx.model.Coupon.Coupon.update({isUse:'1'},{where:{coupon_code:body.coupon_code}, transaction: t})
+            body.couponPrice = keepTwoDecimal(res.price)
+            body.actualDelivery -= keepTwoDecimal(res.price)
+          }
+          
+        }
+        body.actualDelivery +=keepTwoDecimal(body.postPrice)
+        console.log(body.actualDelivery) 
+
+         // 创建用户信息
+         const createOrder = await ctx.model.Order.Order.create(body, { transaction: t });
         // 创建订单与菜品
         const res = await ctx.model.Order.OrderCommodity.bulkCreate(OrderCommodityArr, { transaction: t });
 
@@ -289,19 +324,36 @@ class OrderService extends Service {
     try {
 
       // 更新用户信息
-      await ctx.model.Order.Order.update(body, {
-        where: {
-          order_id: body.order_id,
-        },
-      });
+     
       // 0未接单 1已接单 2未取货 3派送中 4已送达 5退单 6超时 7已赔付
       if (body.status == '1') {
+        body.accept_time = ctx.helper.formatTime(new Date());
+        await ctx.model.Order.Order.update(body, {
+          where: {
+            order_id: body.order_id,
+          },
+        });
         return { success: true, msg: "成功接单" };
       } else if (body.status == '5') {
+        await ctx.model.Order.Order.update(body, {
+          where: {
+            order_id: body.order_id,
+          },
+        });
         return { success: true, msg: "成功退单" };
       }else if (body.status == '7') {
+        await ctx.model.Order.Order.update(body, {
+          where: {
+            order_id: body.order_id,
+          },
+        });
         return { success: true, msg: "处理成功" };
       }else {
+        await ctx.model.Order.Order.update(body, {
+          where: {
+            order_id: body.order_id,
+          },
+        });
         return { success: true, msg: "." };
       }
 
@@ -343,7 +395,7 @@ class OrderService extends Service {
               },
               transaction: t 
             });
-            await ctx.model.User.Postman.update({overtime:postman.overtime+1,now:postman.now+1}, {
+            await ctx.model.User.Postman.update({overtime:postman.overtime+1,now:postman.now+1,history:postman.history+1}, {
               where: {
                 id: postman.id,
               },
@@ -448,6 +500,57 @@ class OrderService extends Service {
       console.log(error);
       return { success: false };
     }
+  }
+
+  async pagePostman(query){
+    const { app, ctx } = this;
+    const { limit, page } = query;
+    const Op = app.Sequelize.Op;
+    const where = {
+      upt_act: { [Op.ne]: 'D' },
+      
+    };
+    where.status = query.status
+    where.id = query.id
+    return await ctx.model.Order.Order.findAndCountAll({
+      distinct: true, // 不加distinct，count和实际不符
+      include:
+        [
+          {
+            model: ctx.model.User.User,
+            required: false,//加上此参数,指定为外连接,能保证空数据时不过滤父元素f
+            attributes: ['user_id', 'user_name'],
+          },
+          {
+            model: ctx.model.Order.Address,
+            required: true,//加上此参数,指定为外连接,能保证空数据时不过滤父元素
+            attributes: ['address_id', 'address', 'phone_number', 'sex', 'name'],
+          },
+          {
+            model: ctx.model.Shop.Shop,
+            attributes: ['shop_id', 'name',"img_url"],
+            required: true,
+          },
+          {
+            model: ctx.model.User.Postman,
+            required: false,
+            attributes: ['id', 'name', 'sex', 'phone_number',],
+          },
+          {
+            model: ctx.model.Order.OrderCommodity,
+            required: true,
+            include: {
+              model: ctx.model.Shop.Commodity,
+              required: false,
+              attributes: ['commodity_id', 'name', 'price','img_url'],
+            }
+          },
+        ],
+      where,
+      offset: (page - 1) * limit,
+      limit: parseInt(limit),
+      order: [['created_at', 'desc']],
+    });
   }
 
   async delete({ order_id }) {

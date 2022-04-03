@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-06 23:32:43
  * @LastEditors: Andy
- * @LastEditTime: 2021-09-16 15:16:37
+ * @LastEditTime: 2021-10-10 10:51:13
  */
 'use strict';
 
@@ -38,7 +38,6 @@ class TestController extends Controller {
     }
     async testType(){
       const { app, ctx } = this;
-      // const Op = app.Sequelize.Op;
       const Op = app.Sequelize.Op;
       const where = { upt_act: { [Op.ne]: 'D' } };
       const body = ctx.request.body;
@@ -106,6 +105,17 @@ class TestController extends Controller {
           console.log("err:",err)
       });
     }
+
+    async testTime(){
+      const { app, ctx } = this;
+      const Op = app.Sequelize.Op;
+      const where = { upt_act: { [Op.ne]: 'D' } };
+      const body = ctx.request.body;
+      console.log(body.end_time,body.start_time,ctx.helper.formatTime(new Date()));
+      console.log(body.end_time<ctx.helper.formatTime(new Date()),ctx.helper.formatTime(new Date())<body.start_time,);
+      
+    }
 }
 
 module.exports = TestController;
+

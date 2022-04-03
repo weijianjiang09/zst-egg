@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 17:19:23
  * @LastEditors: Andy
- * @LastEditTime: 2021-09-17 13:20:19
+ * @LastEditTime: 2021-11-13 00:29:14
  */
 'use strict';
 
@@ -46,11 +46,25 @@ class ShopService extends Service {
         required: false,//加上此参数,指定为外连接,能保证空数据时不过滤父元素
         where:{ upt_act: { [Op.ne]: 'D' }},
         attributes: ['shop_id', 'type_id', 'type_name'],
+      },
+      {
+        model: ctx.model.Shop.Evaluate,
+        required: false,//加上此参数,指定为外连接,能保证空数据时不过滤父元素
+        where:{ upt_act: { [Op.ne]: 'D' }},
+        attributes: ['shop_id',"user_id", 'evaluate_id', 'evaluate',"img_url"],
+      },
+      {
+        model: ctx.model.Shop.Specification,
+        required: false,//加上此参数,指定为外连接,能保证空数据时不过滤父元素
+        where:{ upt_act: { [Op.ne]: 'D' }},
+        attributes: ['commodity_id',"shop_id", 'type', 'name',"price","checkbox","specification_id"],
       },],
       offset: (page - 1) * limit,
       limit: parseInt(limit),
       order: [['created_at', 'desc']],
       
+      
+
     });
   }
 
@@ -59,7 +73,7 @@ class ShopService extends Service {
 
     const { userid } = ctx.state.user;
     const Op = app.Sequelize.Op;
-    const where = { upt_act: { [Op.ne]: 'D' } };
+    const where = { upt_act: { [Op.ne]: 'D' }  };
     body.created_id = userid;
     body.updated_id = userid;
     // body.opening = '0'
@@ -92,7 +106,7 @@ class ShopService extends Service {
     const { ctx ,app} = this;
     const { userid } = ctx.state.user;
     const Op = app.Sequelize.Op;
-    const where = { upt_act: { [Op.ne]: 'D' } };
+    const where = { upt_act: { [Op.ne]: 'D' },shop_id: body.shop_id,};
     body.updated_at = ctx.helper.formatTime(new Date());
     body.updated_id = userid;
     body.upt_act = 'U';
@@ -167,6 +181,7 @@ class ShopService extends Service {
     } catch (error) {
       console.log(error);
       return null;
+      
     }
   }
 

@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-28 15:58:23
  * @LastEditors: Andy
- * @LastEditTime: 2021-10-04 22:58:39
+ * @LastEditTime: 2022-03-24 22:28:49
  */
 'use strict';
 
@@ -111,6 +111,8 @@ module.exports = app => {
   router.get('/punctuality/api/order/order/page', jwt, controller.order.order.page);
   // 查询订单 未完成
   router.get('/punctuality/api/order/order/pageNow', jwt, controller.order.order.page_now);
+  //骑手查询 
+  router.get('/punctuality/api/order/order/pagePostman', jwt, controller.order.order.pagePostman);
   //用户查询 
   router.get('/punctuality/api/order/order/pageUser', jwt, controller.order.order.page_user);
   // 创建订单
@@ -128,6 +130,9 @@ module.exports = app => {
   //申请退款
   router.post('/punctuality/api/order/order/refundOrder',jwt, controller.order.order.refundOrder);
 
+  //菜品规格
+  router.post('/punctuality/api/shop/specification/update',jwt, controller.shop.specification.update);
+
   // 商店类型搜索
   router.get('/punctuality/api/shop/type/select', jwt, controller.shop.type.typeSelect);
   // 确认分类下是否还有菜品
@@ -135,7 +140,31 @@ module.exports = app => {
 
   //配送费
   router.get('/punctuality/api/order/postPrice/select', jwt, controller.order.postPrice.select);
+  // 修改
+  router.post('/punctuality/api/order/postPrice/change', jwt, controller.order.postPrice.change);
+  //添加
+  router.post('/punctuality/api/order/postPrice/create', jwt, controller.order.postPrice.create);
+  // 删除
+  router.post('/punctuality/api/order/postPrice/delete', jwt, controller.order.postPrice.delete);
 
+  // 商店评论查询
+  router.get('/punctuality/api/shop/evaluate/ShopEvaluateSelect', jwt, controller.shop.evaluate.ShopEvaluateSelect);
+  // 以内容模糊查询
+  router.get('/punctuality/api/shop/evaluate/EvaluateSelect', jwt, controller.shop.evaluate.EvaluateSelect);
+  // 评论删除 
+  router.post('/punctuality/api/shop/evaluate/ShopEvaluateDelete', jwt, controller.shop.evaluate.ShopEvaluateDelete);
+  // 评论
+  router.post('/punctuality/api/shop/evaluate/ShopEvaluateCreate', jwt, controller.shop.evaluate.ShopEvaluateCreate);
+
+  // 查询优惠卷
+  router.get('/punctuality/api/coupon/coupon/CouponSelect', jwt, controller.coupon.coupon.CouponSelect);
+  // 优惠卷创建
+  router.post('/punctuality/api/coupon/coupon/CouponCreate', jwt, controller.coupon.coupon.CouponCreate);
+  // 删除优惠卷
+  router.post('/punctuality/api/coupon/coupon/CouponDelete', jwt, controller.coupon.coupon.CouponDelete);
+  // 兑换优惠卷
+  router.post('/punctuality/api/coupon/coupon/CouponExchange', jwt, controller.coupon.coupon.CouponExchange);
+  
   // 支付
   router.post('/punctuality/api/pay/pay',jwt, controller.pay.pay.CreatePaymentInfo);
   // 退款
@@ -145,4 +174,6 @@ module.exports = app => {
   router.get('/punctuality/api/test/test', jwt, controller.test.test.test);
   // type 测试
   router.post('/punctuality/api/test/testType', jwt, controller.test.test.testType);
+  // 时间测试
+  router.post('/punctuality/api/test/testTime',controller.test.test.testTime);
 };

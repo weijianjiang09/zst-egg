@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 11:14:51
  * @LastEditors: Andy
- * @LastEditTime: 2021-10-03 23:31:50
+ * @LastEditTime: 2021-10-16 13:26:49
  */
 'use strict';
 const base = require('../base');
@@ -19,9 +19,13 @@ module.exports = app => {
       address_id: { type: INTEGER, },
       shop_id: { type: INTEGER, },
       id: { type: INTEGER, },
+      evaluate_id:{  type:STRING(64), },
       remark: STRING(255),
       cause:STRING(255),
       end_time: DATE,
+      accept_time:DATE,
+      couponPrice:{type: DECIMAL(10,2)},
+      actualDelivery:{type: DECIMAL(10,2)},
       postPrice:{ type: DECIMAL(10,2) },
       overtime: { type: INTEGER, },
       status: STRING(2),

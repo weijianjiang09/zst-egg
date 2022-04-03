@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-08-07 10:52:00
  * @LastEditors: Andy
- * @LastEditTime: 2021-10-03 15:18:28
+ * @LastEditTime: 2021-11-09 14:53:21
  */
 'use strict';
 /**
@@ -64,6 +64,25 @@ class OrderController extends Controller {
 
     this.success(await ctx.service.order.order.page_user(query),"查询成功");
   }
+    /**
+   *@router get /punctuality/api/order/order/pagePostman
+   *@summary 订单查询
+   * @Description 骑手自行定义查询，按照传入的status
+   * @request body OrderPageUser
+   * @response 200 resOrderPage
+   */
+  async pagePostman() {
+    const { ctx } = this;
+    const query = ctx.query;
+    ctx.validate({
+      limit: { type: 'string', required: true },
+      page: { type: 'string', required: true },
+      status:{type:"string" , required: true},
+      id:{type:"string" , required: true }
+    }, query);
+
+    this.success(await ctx.service.order.order.pagePostman(query),"查询成功");
+  }
    /**
    * @router post /punctuality/api/order/order/create
    * @summary 订单创建
@@ -76,9 +95,12 @@ class OrderController extends Controller {
     const body = ctx.request.body;
 
     ctx.validate({
+      order_id:{type:'string',required: true},
       address_id: { type: 'integer', required: true },
       commodity :{ type: 'array', required: true },
       shop_id: { type: 'integer', required: true },
+      over_time:{type:"number", required: true },
+      postPrice:{type:'number', required: true},
     }, body);
 
     const res = await ctx.service.order.order.create(body);

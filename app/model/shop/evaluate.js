@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 15:02:11
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-08 10:39:56
+ * @LastEditTime: 2021-10-11 23:30:36
  */
 'use strict';
 const base = require('../base');
@@ -14,15 +14,14 @@ module.exports = app => {
 
   const Evaluate = app.model.define('evaluate',
     Object.assign(base(app), {
-      evaluate_id: { type: INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+      evaluate_id: { type:STRING(64) , primaryKey: true, autoIncrement: true, allowNull: false },
       shop_id: { type: INTEGER, },
-      order_id: { type: INTEGER, },
-      img_url: STRING(128),
+      user_id: { type: INTEGER, },
+      img_url: STRING(255),
       evaluate: STRING(255),
     }));
   Evaluate.associate = () => {
     Evaluate.hasOne(app.model.Shop.Shop, { foreignKey: 'shop_id' });
-    // Evaluate.hasOne(app.model.Order.Order, { foreignKey: 'order_id' });
   }
   return Evaluate;
 };

@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 17:14:24
  * @LastEditors: Andy
- * @LastEditTime: 2021-09-16 16:04:33
+ * @LastEditTime: 2022-03-29 14:10:35
  */
 'use strict';
 /**
@@ -72,7 +72,7 @@ class ShopController extends Controller {
       // location: { type: 'string', required: true },
       // img_url: { type: 'string', required: true },
     }, body);
-
+    
     const res = await ctx.service.shop.shop.update(body);
     if (res) {
       this.success('','修改成功');

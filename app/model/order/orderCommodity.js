@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 16:21:56
  * @LastEditors: Andy
- * @LastEditTime: 2021-09-15 15:55:36
+ * @LastEditTime: 2021-10-17 23:08:01
  */
 'use strict';
 
@@ -17,6 +17,7 @@ module.exports = app => {
     number: INTEGER(11),
     specification: STRING(128),
     price:{ type: DECIMAL(10,2) },
+    packagePrice:{type: DECIMAL(10,2)}
   });
 
   OrderCommodity.associate = () => {

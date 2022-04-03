@@ -4,7 +4,7 @@
  * @Author: 蒋炜楗
  * @Date: 2021-07-31 21:01:04
  * @LastEditors: Andy
- * @LastEditTime: 2021-08-20 23:46:56
+ * @LastEditTime: 2022-03-29 14:10:48
  */
 'use strict';
 /**
@@ -65,7 +65,7 @@ class CommodityController extends Controller {
   async update() {
     const { ctx } = this;
     const body = ctx.request.body;
-
+    console.log(body)
     ctx.validate({
       commodity_id:{ type: 'integer', required: true },
     }, body);
