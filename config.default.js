@@ -33,9 +33,9 @@ module.exports = appInfo => {
 
   config.sequelize = {
     dialect: 'mysql',
-    host: '8.136.120.148',
+    host: '',
     username: 'root',
-    password: 'jk123.JWJ',
+    password: '',
     port: 3306,
     database: 'zst',
     timezone: '+08:00',
@@ -88,7 +88,7 @@ module.exports = appInfo => {
   };
 
   config.jwt = {
-    secret: '123edasfvbyj6SDG$t35W',
+    secret: '123edasfvbyj6SDG$jung',
   };
 
   config.security = {
