@@ -34,9 +34,9 @@ module.exports = appInfo => {
 
   config.sequelize = {
     dialect: 'mysql',
-    host: '8.136.120.148',
+    host: '',
     username: 'root',
-    password: 'jk123.JWJ',
+    password: '',
     port: 3306,
     database: 'zst',
     timezone: '+08:00',
@@ -89,11 +89,11 @@ module.exports = appInfo => {
   config.wechatPay = {
     client: {
         bodyPrefix: '',//
-        appId: 'wx5ae968f3adc48899',//微信公众号或小程序号
-        merchantId: '1614409786',//商户号
-        secret: 'd37c6f877610f4732af3755e054b5b21',//商户密钥
-        notifyUrl: 'https://zhenzhunshi.com',//支付成功回调地址
-        REFUNDNotifyUrl: 'https://zhenzhunshi.com',//退款成功回调地址
+        appId: '',//微信公众号或小程序号
+        merchantId: '',//商户号
+        secret: '',//商户密钥
+        notifyUrl: 'https://.com',//支付成功回调地址
+        REFUNDNotifyUrl: 'https://.com',//退款成功回调地址
         pfx: fs.readFileSync(path.join(__dirname, '../app/public/wxpay/apiclient_cert.p12'))//退款证书地址
     },
     URLS: {
