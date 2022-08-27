@@ -32,4 +32,5 @@ $ npm stop
 
 [egg]: https://eggjs.org
 
-### 外面小程序后台
+### 外卖小程序后台
+需要自行申请微信appId 和商户号
